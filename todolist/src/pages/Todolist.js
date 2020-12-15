@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Hello = ({match}) =>{
+const Todolist = ({match}) =>{
     return (
         <div>
             <h2>Hello! {match.params.name}</h2>
@@ -8,4 +8,4 @@ const Hello = ({match}) =>{
     )
 }
 
-export default Hello;
+export default Todolist;
