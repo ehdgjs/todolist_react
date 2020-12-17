@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+import update from 'react-addons-update';
 import Contactinfo from './Contactinfo';
+import ContactDetails from './ContactDetails';
 
 const Contact = () => {
     const [contactData] = useState([{
@@ -19,9 +21,14 @@ const Contact = () => {
         number: "010-0000-0004"
     }]);
     const [keyword, setkeyword] = useState('');
+    const [selectedKey, setselectedKey] = useState(-1);
 
     const handleChange = (e) => {
         setkeyword(e.target.value);
+    };
+
+    const hadleClick = (key) => {
+        setselectedKey(key);
     };
 
     const mapToComponent = (data) => {
@@ -33,7 +40,13 @@ const Contact = () => {
             }
             );
         return data.map((contact, i) => {
-            return (<Contactinfo contact={contact} key={i}/>)
+            return (
+            <Contactinfo 
+                contact={contact}
+                key={i}
+                onClick={() => hadleClick(i)}
+            />
+            )
         })
     };
 
@@ -46,6 +59,10 @@ const Contact = () => {
                 onChange={handleChange}
             />
             {mapToComponent(contactData)}
+            <ContactDetails 
+                isSelected={selectedKey !== -1}
+                contact={contactData[selectedKey]}
+            />
         </div>
     );
 }
