@@ -7,14 +7,26 @@ const ContactCreate = (props) => {
         number : ''
     });
 
+    const { name, number } = contact;
+
     const handleChange = (e) => {
-        let nextState = {};
-        nextState[e.target.name] = e.target.value;
-        setcontact(nextState)
-    }
+        const {value, name} = e.target;
+        setcontact({
+            ...contact,
+            [name]: value
+        });
+    };
 
     const handleClick = () => {
-
+        const contacts = {
+            name: contact.name,
+            number: contact.number
+        }
+        props.onCreate(contacts);
+        setcontact({
+            name : '',
+            number : ''
+        })
     }
 
     return (
@@ -27,12 +39,12 @@ const ContactCreate = (props) => {
                     onChange={handleChange}
                 />
                 <input
-                    type="text" name="phone" placeholder="phone"
+                    type="text" name="number" placeholder="phone"
                     value={contact.number}
                     onChange={handleChange}
                 />
             </p>
-            <button>Create</button>
+            <button onClick={handleClick}>Create</button>
         </div>
     )
 }
