@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import update from 'react-addons-update';
 import Contactinfo from './Contactinfo';
 import ContactDetails from './ContactDetails';
+import ContactCreate from './ContactCreate';
 
 const Contact = () => {
-    const [contactData] = useState([{
+    const [contactData, setcontactData] = useState([{
         name: 'Abet',
         number: "010-0000-0001"
     },
@@ -30,6 +31,25 @@ const Contact = () => {
     const hadleClick = (key) => {
         setselectedKey(key);
     };
+    
+    const handleCreate = (contact) => {
+        setcontactData(update(contactData, {$push: [contact]}));
+    };
+    
+    const handleDelete = () => {
+        setcontactData(update(contactData, {$splice: [[selectedKey, 1]]}));
+        setselectedKey(-1);
+    }
+    
+    const handleEdit = (name, number) => {
+        setcontactData(update(contactData, 
+            {
+                [selectedKey]: {
+                    name : {$set: name},
+                    number: {$set: number}
+                }
+            }));
+    }
 
     const mapToComponent = (data) => {
         data.sort();
@@ -62,6 +82,9 @@ const Contact = () => {
             <ContactDetails 
                 isSelected={selectedKey !== -1}
                 contact={contactData[selectedKey]}
+            />
+            <ContactCreate
+                onCreate={handleCreate}
             />
         </div>
     );
