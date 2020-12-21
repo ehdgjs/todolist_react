@@ -37,6 +37,9 @@ const Contact = () => {
     };
     
     const handleDelete = () => {
+        if(selectedKey < 0){
+            return;
+        }
         setcontactData(update(contactData, {$splice: [[selectedKey, 1]]}));
         setselectedKey(-1);
     }
@@ -82,6 +85,8 @@ const Contact = () => {
             <ContactDetails 
                 isSelected={selectedKey !== -1}
                 contact={contactData[selectedKey]}
+                onRemove={handleDelete}
+                onEdit={handleEdit}
             />
             <ContactCreate
                 onCreate={handleCreate}
